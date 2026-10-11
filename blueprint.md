@@ -1,7 +1,7 @@
 # Карта формализации
 
-Записи C5–C16 из `context.md` доказаны в Lean на слабой области Дирихле. Открыты три
-узла: S-SPLIT для блоков C16, S-DOMAIN и S-GENERAL. Версии: Lean `v4.35.0-rc4`, Mathlib
+Записи C5–C16 из `context.md` доказаны в Lean на слабой области Дирихле; она равна
+$H^2\cap H_0^1$ (S-DOMAIN). Открыты два узла: S-SPLIT для блоков C16 и S-GENERAL. Версии: Lean `v4.35.0-rc4`, Mathlib
 `1f414401f69059aa7eead47b53ee40bd38455eeb`. Аксиомы итоговых теорем проверяются в
 `Scratch.lean`: `propext`, `Classical.choice`, `Quot.sound`.
 
@@ -48,8 +48,9 @@
 | S-BLOCK | теорема Маркуса–Мацаева при $p=1/2$, диагональная форма | S-SCHUR; S4, теорема 6.1 | `exists_bracket_basis_of_subordinate_general` |
 | S-REDUCE | C16: C6 без малости | `bracket_basis_of_gauge_core`, S-BLOCK | `signDefinite_bracket_basis_W2` |
 | S-SPLIT | C7: критерий снятия скобок | D2 | `exists_rieszBasis_iff_uniformBlockBounds`; для блоков C16 равномерные константы не проверены |
-| S-DOMAIN | слабая область Дирихле равна $H^2\cap H_0^1$ | B2 | открыт; доказано описание `memDirichletH2_iff_acRealization` |
-| S-GENERAL | весь класс $W^1_\infty$: нули и смена знака | — | открыт |
+| S-DOMAIN | слабая область Дирихле равна $H^2\cap H_0^1$, где $H_0^1$ — замыкание пробных функций по норме $H^1$ | B2 | `memIntervalH01_iff_trace`, `memDirichletH2_iff_h2_and_h01`; описание через абсолютно непрерывные функции — `memDirichletH2_iff_acRealization` |
+| S-ODD | нечётный $a\in L_\infty$: $UL_a=(1+ia)(-D^2)U$ с унитарным $U=P_++iP_-$ | B1, S-ALL | `parityRotation_norm`, `oddCoefficient_unitary_multiplication`, `oddCoefficient_eigen_iff` |
+| S-GENERAL | весь класс $W^1_\infty$: нули и смена знака | S-ODD для нечётного $a$ | открыт; базисность для нечётного $a$ не доказана |
 
 ```mermaid
 graph LR
@@ -60,6 +61,7 @@ graph LR
   B2 --> B3[B3 складывание]
   B3 --> B4[B4 редукция]
   A3 --> B4
+  B2 --> SDOM[S-DOMAIN]
   B2 --> C1[C1 модельные пары]
   C1 --> C2[C2 полнота модели]
   C2 --> SG[S-GREEN]
@@ -78,6 +80,7 @@ graph LR
   SCH --> SBLOCK[S-BLOCK]
   SBR --> SRED[S-REDUCE]
   SBLOCK --> SRED
+  SALL --> SODD[S-ODD]
   SALL --> SCNT[S-COUNTER]
   SCNT --> SIRR[S-IRREG]
 ```
@@ -91,13 +94,13 @@ graph LR
 | Алгебра | `Reduction`, `MatrixInverse`, `ComplexReduction`, `Examples`, `Symmetrization` | — |
 | Отражение в $L_2$ | `Reflection`, `L2Reflection`, `L2Parity`, `FoldingIntegral` | — |
 | Слабые производные | `WeakDerivative`, `SmoothPrimitive`, `WeakConstant`, `WeakPrimitive`, `ComplexAC` | `WeakConstant` |
-| $H^2$ на интервале | `IntervalSobolev`, `IntervalTrace`, `IntervalRegularity`, `IntervalGluing`, `IntervalReflection`, `IntervalOperator`, `ACDomain` | — |
+| $H^2$ на интервале | `IntervalSobolev`, `IntervalTrace`, `IntervalRegularity`, `IntervalGluing`, `IntervalReflection`, `IntervalOperator`, `ACDomain`, `SobolevClosure` | `SobolevClosure` |
 | Складывание | `L2Folding`, `FoldedSobolev`, `VariableOperator`, `FoldedOperator` | — |
 | Модель | `ClassicalModes`, `SobolevModes`, `ModelBasis`, `ModelEigenbasis` | `ModelBasis` |
 | Оператор Дирихле | `DirichletDomain`, `ScalarDomain`, `DirichletEnergy`, `DirichletGreen`, `SpectralGreen`, `ParityGreen` | — |
 | Чётный коэффициент | `WeightedGreen`, `PositiveWeight`, `CompactEigenbasis`, `MultiplicationEquiv`, `WeightedEigenbasis`, `EvenCoefficient`, `ParityBasis`, `ParityMultiplier`, `EvenEigenbasis`, `WeightedSymmetry`, `ParityDomain`, `EvenNoJordan`, `ACSpectral` | — |
 | Базисы | `RieszBasis`, `BracketBounds`, `FlattenedBounds`, `FiniteSynthesis`, `ProjectionBrackets` | — |
-| Весь класс и примеры | `CompactInverse`, `OneSidedExample`, `RampSpectrum`, `RampNoBasis` | — |
+| Весь класс и примеры | `CompactInverse`, `OneSidedExample`, `RampSpectrum`, `RampNoBasis`, `OddCoefficient` | — |
 | Калибровка | `SobolevMultiplier`, `CoefficientInverse`, `CoefficientSqrt`, `GaugeSimilarity`, `GaugeOperators` | — |
 | Метод подобных операторов | `SchurMultiplier`, `BlockMultiplier`, `SparseCuts`, `BlockPerturbation`, `BlockInvariant`, `SubordinatePerturbation`, `EigenvalueCounting` | `SchurMultiplier`, `SparseCuts` |
 | Скобки для $L_a$ | `SignDefiniteBrackets`, `BracketCorollaries`, `NearlyEvenBrackets`, `GeneralBrackets` | лемма `nearlyEven_gauge_data` |
@@ -109,9 +112,9 @@ graph LR
 
 ## Задачи Aristotle
 
-Все семь задач отправлены 10.10.2026. Для ответов 1–6 сверены формулировки с
-отправленной заготовкой, проверено отсутствие `sorry` и `axiom`, модуль собран локально
-с закреплёнными версиями. Архивы и квитанции лежат в `output/`.
+Все семь задач отправлены 10.10.2026; ответ 7 принят 11.10.2026. Для каждого ответа
+сверены формулировки с отправленной заготовкой, проверено отсутствие `sorry` и `axiom`,
+модуль собран локально с закреплёнными версиями. Архивы и квитанции лежат в `output/`.
 
 | № | Проект | Задача | Архив | Принято |
 | --- | --- | --- | --- | --- |
@@ -121,14 +124,17 @@ graph LR
 | 4 | `62ba5391-5d03-4a3d-b1e5-9949583b2639` | `exists_similarity_fixedPoint`, `exists_sparse_cuts`, `card_le_of_finiteRank_approx` | `aristotle-cuts-result.tar.gz` | `SparseCuts.lean` |
 | 5 | `7f253d14-9ab7-4b6c-a64c-d8814d2e70f6` | `nearlyEven_gauge_data` | `aristotle-nearly-even-result.tar.gz` | `NearlyEvenBrackets.lean` |
 | 6 | `c4fdbf81-6fdc-48c0-b18a-995935371d25` | `exists_bracket_basis_of_subordinate_general` по статье S4 | `aristotle-markus-result.tar.gz`, `aristotle-markus-result2.tar.gz` | `MarkusMatsaev.lean` и 17 модулей `MM*` |
-| 7 | `18ff2d66-76b1-4b36-9808-c9e2df6825f5` | узел S-DOMAIN: `memIntervalH01_iff_trace`, `memDirichletH2_iff_h2_and_h01` | — | ответ не получен |
+| 7 | `18ff2d66-76b1-4b36-9808-c9e2df6825f5` | узел S-DOMAIN: `memIntervalH01_iff_trace`, `memDirichletH2_iff_h2_and_h01` | `aristotle-domain-result.tar.gz` | `SobolevClosure.lean` |
 
 Задача 7 отправлена пакетом `output/aristotle-open-nodes`: весь проект и заготовка
 `Involution/SobolevClosure.lean` с определениями `IsTestPair`, `MemIntervalH01` и двумя
 `sorry`. Пространство $H_0^1(-1,1)$ в заготовке — замыкание гладких функций с носителем
-в $(-1,1)$ по норме $H^1$. В библиотеку заготовка не внесена, узел S-DOMAIN открыт. Узлы
-S-SPLIT для блоков C16 и S-GENERAL не отправлялись: для них нет формулировки, которую
-можно дать как цель в Lean.
+в $(-1,1)$ по норме $H^1$. В ответе из 99 отправленных файлов изменён один,
+`SobolevClosure.lean`: определения и заголовки двух теорем совпадают с заготовкой,
+добавлены импорт `Involution.ComplexAC` и десять вспомогательных объявлений. Доказательство
+идёт через $K^{\perp\perp}=\overline K$ для подпространства пробных пар, а не по наброску
+из `prompt.md`. Определения `IsTestPair` и `MemIntervalH01` приняты 11.10.2026. Узлы S-SPLIT для блоков C16 и S-GENERAL не отправлялись: для них нет
+формулировки, которую можно дать как цель в Lean.
 
 Задача 6 исчерпала лимит времени с одной недоказанной леммой `MMData.exists_cuts`;
 команда `aristotle continue` её закрыла (второй архив). В модулях `MM*` после переноса

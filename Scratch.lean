@@ -289,3 +289,8 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 #print axioms Involution.signDefinite_bracket_basis_W2
 #print axioms Involution.bracketBasis_of_signDefinite
 #print axioms Involution.steepCoefficient_bracket_basis
+#print axioms Involution.memIntervalH01_iff_trace
+#print axioms Involution.memDirichletH2_iff_h2_and_h01
+#print axioms Involution.parityRotation_norm
+#print axioms Involution.oddCoefficient_unitary_multiplication
+#print axioms Involution.oddCoefficient_eigen_iff

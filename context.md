@@ -12,10 +12,45 @@
 Теоремы Lean сформулированы на слабой области Дирихле `MemDirichletH2`: класс $L_2$ с
 двумя слабыми производными в $L_2$ и непрерывным представителем, равным нулю в $\pm1$.
 Она эквивалентна описанию через абсолютно непрерывные $F$, $F'$ с $F''\in L_2$
-(`memDirichletH2_iff_acRealization`). Равенство с $H^2\cap H_0^1$, где $H_0^1$ —
-замыкание гладких функций с компактным носителем, в Lean не доказано.
+(`memDirichletH2_iff_acRealization`) и совпадает с $H^2\cap H_0^1$; см. следующий раздел.
 
 Всюду $(Rf)(x)=f(-x)$, $T_a=I+aR$, $G$ — обратный к $-D^2$ с условиями Дирихле.
+
+## 0. Область определения
+
+**Определение.** Пробная пара — $(u,u')$ с $u\in C^\infty(\mathbb R;\mathbb C)$,
+$\operatorname{supp}u\subset(-1,1)$ (`IsTestPair`). Класс $H_0^1(-1,1)$ состоит из
+$f\in L_2$ со слабой производной $g\in L_2$, для которых при каждом $\varepsilon>0$ есть
+пробная пара с $\lVert f-u\rVert<\varepsilon$ и $\lVert g-u'\rVert<\varepsilon$
+(`MemIntervalH01`): это замыкание пробных функций по норме $H^1$.
+
+**Утверждение.** $f\in H_0^1(-1,1)$ тогда и только тогда, когда у $f$ есть слабая
+производная в $L_2$ и непрерывный представитель $f$ равен нулю в точках $\pm1$. Поэтому
+слабая область Дирихле равна $H^2(-1,1)\cap H_0^1(-1,1)$.
+
+**Доказательство.** Пусть $K\subset L_2\times L_2$ — подпространство пробных пар; условие
+приближения означает $(f,g)\in\overline K$. Для абсолютно непрерывных $B$, $F$ с
+$B'=\bar a$, $F'=g$, где $B$ — представитель $\bar b$, а $F$ — представитель $f$,
+интегрирование по частям даёт
+
+$$
+\langle a,f\rangle+\langle b,g\rangle=B(1)F(1)-B(-1)F(-1).\tag{1}
+$$
+
+Если $(a,b)\perp K$, то $\bar b$ имеет слабую производную $\bar a$, и у $\bar b$ есть
+абсолютно непрерывный представитель $B$. Если след $f$ нулевой, правая часть (1) равна
+нулю для каждой пары $(a,b)\in K^\perp$, откуда $(f,g)\in K^{\perp\perp}=\overline K$.
+Обратно, пары $(\psi',\psi)$ с вещественной $\psi\in C^1$ лежат в $K^\perp$, так как
+пробные функции равны нулю в $\pm1$. Для $(f,g)\in\overline K$ равенство (1) при
+$\psi(x)=x+1$ и $\psi(x)=x-1$ даёт $F(1)=0$ и $F(-1)=0$.
+
+**Lean.** `SobolevClosure.lean`: `inner_add_inner_eq_boundary`, `testPairSubmodule`,
+`approx_iff_mem_closure`, `memIntervalH01_iff_trace`, `memDirichletH2_iff_h2_and_h01`.
+Модуль получен от Aristotle (задача 7 в `blueprint.md`).
+
+**Границы.** Итоговые теоремы по-прежнему записаны через `MemDirichletH2`; переход к
+$H^2\cap H_0^1$ даёт `memDirichletH2_iff_h2_and_h01`. Пространство $H^2$ здесь —
+`MemIntervalH2` (две слабые производные в $L_2$).
 
 ## 1. Сводка
 
@@ -131,6 +166,38 @@ $2\pi^2$.
 
 **Lean.** `odd_coefficient_product`, `odd_coefficient_determinant`,
 `odd_coefficient_product_bound`, `odd_coefficient_determinant_ge_one`.
+
+**Нечётный коэффициент.** Пусть $a\in L_\infty(-1,1;\mathbb C)$ и $a(-x)=-a(x)$ п.в.;
+оценка произведения не нужна. Положим $P_\pm=(I\pm R)/2$ и $U=P_++iP_-$. Тогда $U$
+унитарен в $L_2$, сохраняет $H^2$ и слабую область Дирихле, и для каждого $f\in H^2$
+
+$$
+UL_af=(1+ia)\bigl(-(Uf)''\bigr).
+$$
+
+Уравнение $L_af=\lambda f$ равносильно уравнению $(1+ia)(-Z'')=\lambda Z$ для $Z=Uf$, то
+есть задаче $-Z''=\lambda\rho Z$ с комплексным весом $\rho=1/(1+ia)$.
+
+**Доказательство.** $U=\alpha I+\beta R$ с $\alpha=(1+i)/2$, $\beta=(1-i)/2$; обратный
+оператор — $\beta I+\alpha R$, так как $2\alpha\beta=1$ и $\alpha^2+\beta^2=0$. Чётная и
+нечётная части ортогональны, поэтому $\lVert Uf\rVert=\lVert f\rVert$. Умножение на
+нечётную $a$ антикоммутирует с отражением: $R(ag)=-aRg$. Отсюда
+
+$$
+U(g+aRg)=\alpha g+\beta Rg+a(\alpha Rg-\beta g)=Ug+ia\,Ug,
+$$
+
+поскольку $i\alpha=-\beta$ и $i\beta=\alpha$. Вторая слабая производная коммутирует с $R$
+и потому с $U$; остаётся подставить $g=-f''$ в $L_af=g+aRg$ (C8).
+
+**Lean.** `OddCoefficient.lean`: `parityRotation`, `parityRotationInv_parityRotation`,
+`parityRotation_norm`, `boundedMultiplier_reflect_odd`, `parityRotation_principalOperator`,
+`memDirichletH2_parityRotation`, `secondWeakDeriv_parityRotation`,
+`oddCoefficient_unitary_multiplication`, `oddCoefficient_eigen_iff`.
+
+**Границы.** Полнота и базисность корневых функций для нечётного $a$ не доказаны.
+Численный расчёт для $a=x/2$ и гипотеза об отсутствии базиса Рисса из собственных
+функций записаны в `ideas.md`, I5.
 
 ### C5. Чётный коэффициент: базис Рисса
 
@@ -677,5 +744,4 @@ $3/4$ относительно $G$, а не $1/2$. Оно исчезает пр�
 - Обычный базис Рисса для C6: проверяемые условия на $a$, дающие равномерные константы
   C7; в частности, случай малой $\varphi'$.
 - Оптимальные постоянные в условиях малости C14–C15.
-- Равенство слабой области Дирихле и $H^2\cap H_0^1$ с $H_0^1$, заданным замыканием.
 - Базисы с присоединёнными функциями и со скобками для коэффициента C12.
