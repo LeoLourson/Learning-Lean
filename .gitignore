@@ -1,3 +1,22 @@
-/.lake
 .lake/
 output/
+
+# Снимок заметок для Aristotle: создаётся скриптом scripts/prepare-input.ps1
+/input/*
+!/input/prompt.md
+/input-lean/lake-manifest.json
+/input-lean/lean-toolchain
+
+# Промежуточные файлы LaTeX
+*.aux
+*.fdb_latexmk
+*.fls
+*.out
+*.synctex.gz
+/review.log
+/review.pdf
+
+# Ключи доступа
+.env
+.env.*
+!.env.example

@@ -1,0 +1,291 @@
+import Involution
+import Mathlib.Algebra.Group.EvenFunction
+import Mathlib.Analysis.Calculus.ContDiff.Operations
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+
+-- Names checked in the pinned local Mathlib, not guessed from another version.
+#check Matrix.det_fin_two
+#check eq_div_iff
+#check le_abs_self
+#check Function.Even
+#check Function.Odd
+#check Involution.principalMatrix_det
+#check Involution.determinant_pos
+#check Involution.solve_system
+
+-- Проверка принятых аналитических и алгебраических лемм.
+#print axioms Involution.second_deriv_reflect
+#print axioms Involution.l2Reflect_involution
+#print axioms Involution.l2EvenPart_orthogonal_l2OddPart
+#print axioms Involution.l2_folding_sq_norm
+#print axioms Involution.constant_cosine_eigen_equation
+#print axioms Involution.constant_sine_eigen_equation
+#print axioms Involution.cosine_dirichlet_boundary
+#print axioms Involution.sine_dirichlet_boundary
+#print axioms Involution.positive_principalMatrix_symmetrization
+#print axioms Involution.negative_principalMatrix_symmetrization
+#print axioms Involution.scaled_gluing_iff
+#print axioms Involution.RieszBasis.dense_span
+#print axioms Involution.rieszBasisOfHilbertBasis_vector
+
+#check HasCompactSupport.comp_homeomorph
+#check tsupport_comp_eq_preimage
+#check Homeomorph.neg
+#check MeasurableEquiv.neg
+#check MeasureTheory.MeasurePreserving.integrable_comp
+#check MeasureTheory.MeasurePreserving.integral_comp
+#check MeasureTheory.integral_smul
+#check MeasureTheory.integral_neg
+
+#print axioms Involution.HasWeakDerivOn.unique
+#print axioms Involution.HasWeakDerivOn.congr
+#print axioms Involution.HasWeakDerivOn.restrict
+#print axioms Involution.weak_second_derivative_reflect
+#print axioms Involution.memIntervalH2_reflect_iff
+#print axioms Involution.hasIntervalWeakDeriv_of_contDiff
+#print axioms Involution.HasIntervalRepresentative.unique
+#print axioms Involution.MemDirichletH2.reflect
+#print axioms Involution.secondWeakDeriv_reflect
+#print axioms Involution.cosineMode_memDirichletH2
+#print axioms Involution.sineMode_memDirichletH2
+#print axioms Involution.cosineWaveL2_eigen_equation
+#print axioms Involution.sineWaveL2_eigen_equation
+#print axioms Involution.cosineWaveL2_ne_zero
+#print axioms Involution.sineModeL2_ne_zero
+#print axioms Involution.constant_cosine_eigenpair
+#print axioms Involution.constant_sine_eigenpair
+#print axioms Involution.odd_coefficient_product_bound
+#print axioms Involution.complex_reduction_under_product_bound
+#print axioms Involution.IsSmoothTestOn.exists_primitive
+#print axioms Involution.HasWeakDerivOn.integral_smul_eq_zero_of_integral_eq_zero
+#print axioms Involution.hasWeakDerivOn_primitive
+#print axioms Involution.complex_primitive_absolutelyContinuous
+#print axioms Involution.HasWeakDerivOn.sub_primitive
+#print axioms Involution.hasWeakDerivOn_const_add_primitive
+#print axioms Involution.hasWeakDerivOn_of_absolutelyContinuous
+#print axioms Involution.HasWeakDerivOn.ae_eq_const_of_zero
+#print axioms Involution.HasWeakDerivOn.exists_ac_representative
+#print axioms Involution.HasL2WeakDeriv.exists_ac_representative
+#print axioms Involution.MemIntervalH2.exists_regular_pair
+#print axioms Involution.regular_pair_representatives_unique
+#print axioms Involution.principalMatrix_inv
+#print axioms Involution.principalInverse_mul_principalMatrix
+#print axioms Involution.HasWeakDerivOn.eqOn_primitive_of_continuousOn
+#print axioms Involution.hasWeakDerivOn_intervalJoin
+#print axioms Involution.intervalJoin_memLp
+#print axioms Involution.memIntervalH2_intervalJoin
+#print axioms Involution.hasDirichletTrace_intervalJoin
+#print axioms Involution.constantModel_orthonormal
+#print axioms Involution.constantModel_dense_span
+#print axioms Involution.constantModelHilbertBasis_coe
+#print axioms Involution.constantModelRieszBasis_vector
+#print axioms Involution.constantModelVector_memDirichletH2
+#print axioms Involution.constantModel_eigen_equation
+#print axioms Involution.constantModelRieszBasis_eigen_equation
+#print axioms Involution.HasWeakDerivOn.reflect_interval
+#print axioms Involution.weak_derivatives_fold
+#print axioms Involution.memDirichletH2_reflectedJoin
+#print axioms Involution.l2Fold_norm
+#print axioms Involution.l2Fold_l2Unfold
+#print axioms Involution.l2FoldingEquiv_symm_apply
+#print axioms Involution.l2Unfold_l2Fold
+#print axioms Involution.FoldedDirichletData.derivatives_unique
+#print axioms Involution.memDirichletH2_iff_fold
+#print axioms Involution.memFoldedDirichletH2_iff_unfold
+#print axioms Involution.realIntervalCoefficient_ae
+#print axioms Involution.boundedMultiplier_norm_le
+#print axioms Involution.variableSobolevOperator_ae
+#print axioms Involution.variableSobolevOperator_norm_le
+#print axioms Involution.variableSobolevOperator_fold
+#print axioms Involution.FoldedDirichletData.secondDeriv_eq
+#print axioms Involution.foldedSecondWeakDeriv_fold
+#print axioms Involution.variableSobolevOperator_unitary_reduction
+#print axioms Involution.variableSobolevOperator_shift_reduction
+#print axioms Involution.variableSobolevOperator_eigen_reduction
+#print axioms Involution.complex_ac_integral_eq_sub
+#print axioms Involution.complex_ac_integration_by_parts
+#print axioms Involution.complex_ac_green_identity
+#print axioms Involution.MemDirichletH2.sub
+#print axioms Involution.secondWeakDeriv_sub
+#print axioms Involution.dirichlet_energy_identity
+#print axioms Involution.negativeSecondWeakDeriv_symmetric
+#print axioms Involution.negativeSecondWeakDeriv_positive
+#print axioms Involution.secondWeakDeriv_dirichlet_injective
+#print axioms Involution.greenFunction_data
+#print axioms Involution.negativeSecondWeakDeriv_surjective
+#print axioms Involution.negativeSecondWeakDeriv_unique_solution
+#print axioms Involution.spectralGreen_compact
+#print axioms Involution.spectralGreen_right_inverse
+#print axioms Involution.spectralGreen_left_inverse
+#print axioms Involution.spectralGreen_symmetric
+#print axioms Involution.spectralGreen_eigenspaces_dense
+#print axioms Involution.spectralGreen_finiteDimensional_eigenspace
+#print axioms Involution.spectralGreen_injective
+#print axioms Involution.spectralGreen_reflect
+#print axioms Involution.parityGreen_compact
+#print axioms Involution.parityGreen_symmetric
+#print axioms Involution.parityGreen_eigenspaces_dense
+#print axioms Involution.parityGreen_injective
+#print axioms Involution.boundedMultiplier_symmetric
+#print axioms Involution.boundedMultiplier_reflect
+#print axioms Involution.boundedMultiplier_injective
+#print axioms Involution.channelPrincipal_weight_inverse
+#print axioms Involution.weightedGreen_compact
+#print axioms Involution.weightedGreen_symmetric
+#print axioms Involution.weightedGreen_injective
+#print axioms Involution.weightedGreen_eigenspaces_dense
+#print axioms Involution.weightedParityGreen_eigenspaces_dense
+#print axioms Involution.weightedGreen_eigenfunction
+#print axioms Involution.weightedGreen_eigenfunction_nonzero
+#print axioms Involution.inverseSqrt_memLp
+#print axioms Involution.inverseSqrtWeight_real
+#print axioms Involution.inverseSqrtWeight_even
+#print axioms Involution.inverseSqrtWeight_nonzero
+#print axioms Involution.inverseSqrtWeight_channel_identity
+#print axioms Involution.sqrt_memLp_of_upper_bound
+#print axioms Involution.sqrtWeight_even
+#print axioms Involution.sqrtWeight_inverseSqrtWeight
+#print axioms Involution.compactEigenvector_orthonormal
+#print axioms Involution.compactEigenvector_orthogonal_eq_bot
+#print axioms Involution.compactEigenbasis_equation
+#print axioms Involution.compactEigenbasis_eigenvalue_ne_zero
+#print axioms Involution.boundedMultiplier_inverse
+#print axioms Involution.multiplicationEquiv
+#print axioms Involution.parityMultiplicationEquiv
+#print axioms Involution.weightedChannelRieszBasis_vector
+#print axioms Involution.weightedSpectralRieszBasis
+#print axioms Involution.weightedChannelEigenbasis_equation
+#print axioms Involution.HasWeakDerivOn.smul
+#print axioms Involution.MemDirichletH2.smul
+#print axioms Involution.secondWeakDeriv_smul
+#print axioms Involution.variableSobolevOperator_smul
+#print axioms Involution.weightedChannelEigenvalue_ne_zero
+#print axioms Involution.weightedEigenvector_memDirichletH2
+#print axioms Involution.weightedEigenvector_equation
+#print axioms Involution.weightedSpectralRieszBasis_memDirichletH2
+#print axioms Involution.weightedSpectralRieszBasis_eigen_equation
+#print axioms Involution.evenCoefficient_abs_bound
+#print axioms Involution.evenCoefficient_channel_bounds
+#print axioms Involution.evenCoefficient_channel_weights
+#print axioms Involution.evenCoefficient_channel_riesz_eigenbasis
+#print axioms Involution.parityBasisVector_orthonormal
+#print axioms Involution.parityBasisVector_orthogonal_eq_bot
+#print axioms Involution.parityHilbertBasis
+#print axioms Involution.parityMultiplierSum_inverse
+#print axioms Involution.parityMultiplierEquiv
+#print axioms Involution.evenCoefficient_riesz_eigenbasis
+#print axioms Involution.secondWeakDeriv_parity
+#print axioms Involution.variableSobolevOperator_channel
+#print axioms Involution.weighted_channel_symmetric
+#print axioms Involution.symmetric_pair_noJordan
+#print axioms Involution.weighted_channel_noJordan
+#print axioms Involution.MemDirichletH2.evenPart
+#print axioms Involution.MemDirichletH2.oddPart
+#print axioms Involution.variableSobolevOperator_evenPart
+#print axioms Involution.variableSobolevOperator_oddPart
+#print axioms Involution.evenCoefficient_noJordan
+#print axioms Involution.memDirichletH2_iff_acRealization
+#print axioms Involution.acRealization_derivatives_eq
+#print axioms Involution.acRealization_first_derivative
+#print axioms Involution.evenCoefficient_AC_riesz_eigenbasis
+#print axioms Involution.evenCoefficient_AC_noJordan
+#print axioms Involution.uniformBlockBounds_global
+#print axioms Involution.globalBlockBounds_uniform
+#print axioms Involution.exists_uniformBlockBounds_iff_global
+#print axioms Involution.flattenedBlockVector_dense
+#print axioms Involution.RieszBasisWithBrackets.finite_sum_eq_zero
+#print axioms Involution.sum_padded_sigma
+#print axioms Involution.finiteRiesz_linearCombination_injective
+#print axioms Involution.globalBlockBounds_finiteRiesz
+#print axioms Involution.finiteRiesz_globalBlockBounds
+#print axioms Involution.exists_uniformBlockBounds_iff_finiteRiesz
+#print axioms Involution.finiteCoordinateEmbedding_norm_sq
+#print axioms Involution.finiteCoordinateEmbedding_dense
+#print axioms Involution.finiteRiesz_synthesis_norm_bounds
+#print axioms Involution.finiteRiesz_exists_synthesis_equiv
+#print axioms Involution.finiteRiesz_exists_rieszBasis
+#print axioms Involution.RieszBasis.exists_finiteRieszBounds
+#print axioms Involution.exists_rieszBasis_iff_finiteBounds_dense
+#print axioms Involution.exists_rieszBasis_iff_uniformBlockBounds
+#print axioms Involution.HasACMultiplierDerivative.of_weak
+#print axioms Involution.HasL2WeakDeriv.mul_coefficient
+#print axioms Involution.MemIntervalH2.mul_coefficient
+#print axioms Involution.MemDirichletH2.mul_coefficient
+#print axioms Involution.MemIntervalW2Infinity.mul_dirichlet
+#print axioms Involution.memDirichletH2_mul_iff
+#print axioms Involution.firstWeakDeriv_mul_coefficient
+#print axioms Involution.secondWeakDeriv_mul_coefficient
+#print axioms Involution.secondWeakDeriv_mul_coefficient_norm_le
+#print axioms Involution.continuous_representative_norm_lower
+#print axioms Involution.inverseCoefficient_reciprocal
+#print axioms Involution.HasACMultiplierDerivative.coeff_mul
+#print axioms Involution.HasACMultiplierDerivative.coeff_inv
+#print axioms Involution.MemIntervalW2Infinity.coeff_inv
+#print axioms Involution.MemIntervalW2Infinity.reciprocal
+#print axioms Involution.memDirichletH2_mul_iff_of_lower
+#print axioms Involution.sqrt_lipschitzOn_positive
+#print axioms Involution.sqrtWeight_hasACDerivative
+#print axioms Involution.sqrtWeight_memW2Infinity
+#print axioms Involution.inverseSqrtWeight_memW2Infinity
+#print axioms Involution.continuous_nonzero_constant_sign
+#print axioms Involution.real_abs_memW2Infinity
+#print axioms Involution.sqrt_abs_weights_memW2Infinity
+#print axioms Involution.sqrt_abs_dirichlet_iff
+#print axioms Involution.principalOperatorInverse_left
+#print axioms Involution.principalOperatorInverse_right
+#print axioms Involution.variableSobolevOperator_eq_principal
+#print axioms Involution.variableGreen_compact
+#print axioms Involution.variableOperator_solution_iff
+#print axioms Involution.variableOperator_eigen_iff
+#print axioms Involution.variableOperator_fredholm
+#print axioms Involution.principalOperator_isSymmetric_iff
+#print axioms Involution.productBound_compact_inverse
+#print axioms Involution.productBound_fredholm
+#print axioms Involution.gauge_similarity
+#print axioms Involution.gaugePerturbation_subordinate
+#print axioms Involution.real_coefficient_constant_sign
+#print axioms Involution.signDefinite_gauge_reduction
+#print axioms Involution.signDefinite_perturbed_riesz_model
+#print axioms Involution.unit_coefficient_sine_kernel
+#print axioms Involution.cauchy_zero_unique
+#print axioms Involution.hasDerivAt_of_ac_of_ae_eq
+#print axioms Involution.oneSided_no_eigenfunction
+#print axioms Involution.oneSidedGreen_no_eigenvector
+#print axioms Involution.oneSided_invariant_block_eq_bot
+#print axioms Involution.oneSided_no_riesz_eigenbasis
+#print axioms Involution.oneSided_no_bracket_basis
+#print axioms Involution.cauchy_energy_bound
+#print axioms Involution.rampCoefficient_lipschitz
+#print axioms Involution.ramp_eigenvalue_bound
+#print axioms Involution.quasiMode_second_deriv
+#print axioms Involution.ramp_quasimodes
+#print axioms Involution.rieszEigenbasis_lower_bound
+#print axioms Involution.ramp_no_riesz_eigenbasis
+
+-- Базис Рисса со скобками (C13–C14).
+#print axioms Involution.SchurBound.blockSum
+#print axioms Involution.schurBound_separated_upper
+#print axioms Involution.exists_similarity_fixedPoint
+#print axioms Involution.exists_sparse_cuts
+#print axioms Involution.card_le_of_finiteRank_approx
+#print axioms Involution.SpectralBlocks.exists_block_similarity
+#print axioms Involution.exists_bracket_basis_of_subordinate
+#print axioms Involution.green_sandwich_eigen_count
+#print axioms Involution.bracket_basis_of_gauge
+#print axioms Involution.signDefinite_bracket_basis
+#print axioms Involution.signDefinite_bracket_rootVectors
+#print axioms Involution.tiltedCoefficient_bracket_basis
+#print axioms Involution.nearlyEven_gauge_data
+#print axioms Involution.nearlyEven_bracket_basis
+#print axioms Involution.nearlyEven_bracket_rootVectors
+#print axioms Involution.rieszBasis_of_even
+#print axioms Involution.bracketBasis_of_nearlyEven
+#print axioms Involution.even_coefficient_deviation_zero
+#print axioms Involution.evenSignDefinite_bracket_basis
+#print axioms Involution.projection_riesz_bounds
+#print axioms Involution.signDefinite_bracket_basis_general
+#print axioms Involution.exists_bracket_basis_of_subordinate_general
+#print axioms Involution.markusMatsaevStatement
+#print axioms Involution.signDefinite_bracket_basis_W2
+#print axioms Involution.bracketBasis_of_signDefinite
+#print axioms Involution.steepCoefficient_bracket_basis

@@ -1,0 +1,11 @@
+name = "involution-exercise"
+version = "0.1.0"
+defaultTargets = ["Target"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0-rc4"
+
+[[lean_lib]]
+name = "Target"
