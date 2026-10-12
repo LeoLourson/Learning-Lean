@@ -294,3 +294,12 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 #print axioms Involution.parityRotation_norm
 #print axioms Involution.oddCoefficient_unitary_multiplication
 #print axioms Involution.oddCoefficient_eigen_iff
+#print axioms Involution.eigenvalue_sector
+#print axioms Involution.oddCoefficient_eigenvalue_sector
+#print axioms Involution.ramp_eigenvalue_sector
+#print axioms Involution.halfSlope_quasimodes
+#print axioms Involution.rieszEigenbasis_count
+#print axioms Involution.halfSlope_no_riesz_eigenbasis
+#print axioms Involution.principalOperator_boundedInverse
+#print axioms Involution.resolvent_estimate_corrected
+#print axioms Involution.resolvent_ray_estimate

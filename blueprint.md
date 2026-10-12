@@ -1,7 +1,8 @@
 # Карта формализации
 
-Записи C5–C16 из `context.md` доказаны в Lean на слабой области Дирихле; она равна
-$H^2\cap H_0^1$ (S-DOMAIN). Открыты два узла: S-SPLIT для блоков C16 и S-GENERAL. Версии: Lean `v4.35.0-rc4`, Mathlib
+Записи C5–C16, C18 и утверждения 1–2 записи C17 (`context.md`) доказаны в Lean на
+слабой области Дирихле; она равна $H^2\cap H_0^1$ (S-DOMAIN). Открыты два узла: S-SPLIT
+для блоков C16 и S-GENERAL. Версии: Lean `v4.35.0-rc4`, Mathlib
 `1f414401f69059aa7eead47b53ee40bd38455eeb`. Аксиомы итоговых теорем проверяются в
 `Scratch.lean`: `propext`, `Classical.choice`, `Quot.sound`.
 
@@ -50,7 +51,10 @@ $H^2\cap H_0^1$ (S-DOMAIN). Открыты два узла: S-SPLIT для бл�
 | S-SPLIT | C7: критерий снятия скобок | D2 | `exists_rieszBasis_iff_uniformBlockBounds`; для блоков C16 равномерные константы не проверены |
 | S-DOMAIN | слабая область Дирихле равна $H^2\cap H_0^1$, где $H_0^1$ — замыкание пробных функций по норме $H^1$ | B2 | `memIntervalH01_iff_trace`, `memDirichletH2_iff_h2_and_h01`; описание через абсолютно непрерывные функции — `memDirichletH2_iff_acRealization` |
 | S-ODD | нечётный $a\in L_\infty$: $UL_a=(1+ia)(-D^2)U$ с унитарным $U=P_++iP_-$ | B1, S-ALL | `parityRotation_norm`, `oddCoefficient_unitary_multiplication`, `oddCoefficient_eigen_iff` |
-| S-GENERAL | весь класс $W^1_\infty$: нули и смена знака | S-ODD для нечётного $a$ | открыт; базисность для нечётного $a$ не доказана |
+| S-SECTOR | C17: при $\lvert a(x)+a(-x)\rvert\le2\alpha$, $\alpha<1$, $\lvert a(x)-a(-x)\rvert\le2\beta$ собственные значения лежат в секторе $(1-\alpha)\lvert\operatorname{Im}\lambda\rvert\le\beta\operatorname{Re}\lambda$ | S-ALL, энергетическое тождество | `eigenvalue_sector`, `oddCoefficient_eigenvalue_sector`, `ramp_eigenvalue_sector` |
+| S-RESOLVENT | C17, утверждение 2: $T_a$ обратим при $\lvert a(x)+a(-x)\rvert\le2\alpha$, $\alpha<1$; $(L_a+s)f=h$ однозначно разрешимо при $s\ge0$, $\lVert f\rVert\le\lVert G\rVert\lVert h\rVert/(1-\alpha)$ и $\lVert f\rVert\le\lVert T_a\rVert^2\lVert h\rVert/((1-\alpha)^2s)$ | S-SECTOR, S-GREEN | `principalOperator_boundedInverse`, `resolvent_estimate_corrected`, `resolvent_ray_estimate`; полнота (S3, теорема 4.7) не формализована |
+| S-HALF | C18: при $a=x/2$ нет базиса Рисса из собственных функций | S-ODD, S-IRREG, S-COUNT | `halfSlope_quasimodes`, `rieszEigenbasis_count`, `halfSlope_no_riesz_eigenbasis` |
+| S-GENERAL | весь класс $W^1_\infty$: нули и смена знака | S-ODD для нечётного $a$, S-SECTOR, S-HALF | открыт; базис со скобками и базис с присоединёнными функциями для нечётного $a$ не исследованы |
 
 ```mermaid
 graph LR
@@ -81,6 +85,10 @@ graph LR
   SBR --> SRED[S-REDUCE]
   SBLOCK --> SRED
   SALL --> SODD[S-ODD]
+  SALL --> SSEC[S-SECTOR]
+  SSEC --> SRES[S-RESOLVENT]
+  SODD --> SHALF[S-HALF]
+  SIRR --> SHALF
   SALL --> SCNT[S-COUNTER]
   SCNT --> SIRR[S-IRREG]
 ```
@@ -100,7 +108,8 @@ graph LR
 | Оператор Дирихле | `DirichletDomain`, `ScalarDomain`, `DirichletEnergy`, `DirichletGreen`, `SpectralGreen`, `ParityGreen` | — |
 | Чётный коэффициент | `WeightedGreen`, `PositiveWeight`, `CompactEigenbasis`, `MultiplicationEquiv`, `WeightedEigenbasis`, `EvenCoefficient`, `ParityBasis`, `ParityMultiplier`, `EvenEigenbasis`, `WeightedSymmetry`, `ParityDomain`, `EvenNoJordan`, `ACSpectral` | — |
 | Базисы | `RieszBasis`, `BracketBounds`, `FlattenedBounds`, `FiniteSynthesis`, `ProjectionBrackets` | — |
-| Весь класс и примеры | `CompactInverse`, `OneSidedExample`, `RampSpectrum`, `RampNoBasis`, `OddCoefficient` | — |
+| Весь класс и примеры | `CompactInverse`, `OneSidedExample`, `RampSpectrum`, `RampNoBasis`, `OddCoefficient`, `EigenvalueSector`, `ResolventAux`, `ResolventBound` | `ResolventAux`; в `ResolventBound` — `principalOperator_boundedInverse` |
+| Пример $a=x/2$ | `HalfSlopeProfile`, `RieszEigenCount`, `HalfSlope` | все |
 | Калибровка | `SobolevMultiplier`, `CoefficientInverse`, `CoefficientSqrt`, `GaugeSimilarity`, `GaugeOperators` | — |
 | Метод подобных операторов | `SchurMultiplier`, `BlockMultiplier`, `SparseCuts`, `BlockPerturbation`, `BlockInvariant`, `SubordinatePerturbation`, `EigenvalueCounting` | `SchurMultiplier`, `SparseCuts` |
 | Скобки для $L_a$ | `SignDefiniteBrackets`, `BracketCorollaries`, `NearlyEvenBrackets`, `GeneralBrackets` | лемма `nearlyEven_gauge_data` |
@@ -112,8 +121,8 @@ graph LR
 
 ## Задачи Aristotle
 
-Все семь задач отправлены 10.10.2026; ответ 7 принят 11.10.2026. Для каждого ответа
-сверены формулировки с отправленной заготовкой, проверено отсутствие `sorry` и `axiom`,
+Задачи 1–7 отправлены 10.10.2026; ответ 7 принят 11.10.2026; задача 8 отправлена
+11.10.2026, задача 9 — 12.10.2026; ответы 8 и 9 приняты 12.10.2026. Для каждого принятого ответа сверены формулировки с отправленной заготовкой, проверено отсутствие `sorry` и `axiom`,
 модуль собран локально с закреплёнными версиями. Архивы и квитанции лежат в `output/`.
 
 | № | Проект | Задача | Архив | Принято |
@@ -125,6 +134,8 @@ graph LR
 | 5 | `7f253d14-9ab7-4b6c-a64c-d8814d2e70f6` | `nearlyEven_gauge_data` | `aristotle-nearly-even-result.tar.gz` | `NearlyEvenBrackets.lean` |
 | 6 | `c4fdbf81-6fdc-48c0-b18a-995935371d25` | `exists_bracket_basis_of_subordinate_general` по статье S4 | `aristotle-markus-result.tar.gz`, `aristotle-markus-result2.tar.gz` | `MarkusMatsaev.lean` и 17 модулей `MM*` |
 | 7 | `18ff2d66-76b1-4b36-9808-c9e2df6825f5` | узел S-DOMAIN: `memIntervalH01_iff_trace`, `memDirichletH2_iff_h2_and_h01` | `aristotle-domain-result.tar.gz` | `SobolevClosure.lean` |
+| 8 | `55948b6e-fdd9-40a9-a773-134c314d2281` | узел S-GENERAL: `halfSlope_no_riesz_eigenbasis` — при $a=x/2$ нет базиса Рисса из собственных функций | `aristotle-halfslope-result.tar.gz` | `HalfSlopeProfile.lean`, `RieszEigenCount.lean`, `HalfSlope.lean` |
+| 9 | `4fa6750a-179c-4643-a25c-4fd9f13cfe54` | C17, утверждение 2: `reflectedMultiplier_re_inner_bound`, `principalOperator_boundedInverse`, `resolvent_estimate` | `aristotle-resolvent-result.tar.gz` | частично: `ResolventAux.lean`, `principalOperator_boundedInverse`; две формулировки заготовки опровергнуты |
 
 Задача 7 отправлена пакетом `output/aristotle-open-nodes`: весь проект и заготовка
 `Involution/SobolevClosure.lean` с определениями `IsTestPair`, `MemIntervalH01` и двумя
@@ -140,6 +151,34 @@ graph LR
 команда `aristotle continue` её закрыла (второй архив). В модулях `MM*` после переноса
 локально правился только стиль: устаревшие имена лемм, длинные строки, три вызова `simp`
 заменены на `simp only`. Формулировки не менялись.
+
+Задача 8 отправлена пакетом `output/aristotle-halfslope`: весь проект и заготовка
+`Involution/HalfSlope.lean` с определениями `halfSlopeCoefficient`, `halfSlopeClass` и
+тремя `sorry` (`halfSlope_quasimodes`, `rieszEigenbasis_count`,
+`halfSlope_no_riesz_eigenbasis`). Бумажный набросок — `ideas.md`, I7; формулировки двух
+промежуточных лемм сервису разрешено менять, итоговую — нет. В ответе (статус
+`COMPLETE`) определения и заголовки трёх теорем совпадают с заготовкой, `sorry` и `axiom`
+нет; добавлены модули `HalfSlopeProfile.lean` и `RieszEigenCount.lean`, два импорта и
+шесть вспомогательных объявлений в `HalfSlope.lean`. Файл `Target.lean`, добавленный
+сервисом, не перенесён. Три модуля перенесены без правок.
+
+Задача 9 отправлена 12.10.2026 пакетом `output/aristotle-resolvent`: весь проект и заготовка
+`Involution/ResolventBound.lean` с тремя `sorry` (`reflectedMultiplier_re_inner_bound`,
+`principalOperator_boundedInverse`, `resolvent_estimate`). Это утверждение 2 записи C17;
+формулировки менять нельзя, в библиотеку заготовка не входит. Заготовка собрана локально
+с закреплёнными версиями перед отправкой (три предупреждения `declaration uses sorry`).
+Задача отправлена по прямому запросу пользователя; параллельная локальная формализация
+остановлена, потому что шла слишком долго.
+
+Ответ на задачу 9 пришёл со статусом `COMPLETE_WITH_ERRORS`. Доказана
+`principalOperator_boundedInverse`. Две другие формулировки заготовки ложны, и сервис
+доказал их отрицания в `ResolventCounter.lean`: в `reflectedMultiplier_re_inner_bound`
+пропущена вещественность коэффициента (ошибка заготовки; контрпример
+$A=i\operatorname{sign}x$), а оценка $\lVert G\rVert/(s+1-\alpha)$ в `resolvent_estimate`
+неверна уже при $a=0$ (ошибка записи C17, исправлена 12.10.2026). В библиотеку
+перенесены `ResolventAux.lean` без правок и теорема `principalOperator_boundedInverse`;
+`ResolventCounter.lean` и версия `ResolventBound.lean` с двумя `sorry` остались в архиве.
+Теорема `resolvent_ray_estimate` в библиотечном `ResolventBound.lean` доказана локально.
 
 `input-lean/Target.lean` — упражнение для сервиса: узел A4 с одним `sorry`. Корневой
 `Target.lean` доказан локально.

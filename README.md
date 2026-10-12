@@ -21,36 +21,42 @@ $$
 | то же и $\bigl\lvert a'(x)/a(x)+a'(-x)/a(-x)\bigr\rvert\le\eta$, $160(1+\sqrt\kappa)\eta<\pi(1-\sqrt\kappa)$ | тот же вывод; доказательство без контурных интегралов | `bracketBasis_of_nearlyEven` |
 | $a\in L_\infty$ | компактный обратный, альтернатива Фредгольма; базисность не следует | `productBound_compact_inverse`, `productBound_fredholm` |
 | $a\in L_\infty$, $a(-x)=-a(x)$ | $L_a$ унитарно эквивалентен $(1+ia)(-D^2)$; базисность не доказана | `oddCoefficient_unitary_multiplication` |
+| $a\in L_\infty$, $\lvert a(x)+a(-x)\rvert\le2\alpha$, $\alpha<1$, $\lvert a(x)-a(-x)\rvert\le2\beta$ | собственные значения в секторе $(1-\alpha)\lvert\operatorname{Im}\lambda\rvert\le\beta\operatorname{Re}\lambda$; $\lVert(L_a+s)^{-1}\rVert\le C/s$ при $s>0$; полнота корневых функций по теореме из S3, в Lean не формализована | `eigenvalue_sector`, `resolvent_ray_estimate` |
 | $a=4$ на $(0,1)$, $a=0$ на $(-1,0)$ | собственных значений нет | `oneSided_no_eigenfunction`, `oneSided_no_bracket_basis` |
 | $a(x)=\max(x,0)$ | нет базиса Рисса из собственных функций | `ramp_no_riesz_eigenbasis` |
+| $a(x)=x/2$ | нет базиса Рисса из собственных функций | `halfSlope_no_riesz_eigenbasis` |
 
 Доказательства, источники и границы каждого утверждения записаны в
 [context.md](context.md). Теоремы Lean сформулированы на слабой области Дирихле: две
 слабые производные в $L_2$ и нулевые значения непрерывного представителя на концах. Она
 равна $H^2\cap H_0^1$, где $H_0^1$ — замыкание гладких функций с компактным носителем
 (`memDirichletH2_iff_h2_and_h01`). Размер скобок не оценён; обычный базис Рисса для
-знакопостоянного $a$, не являющегося чётным, не установлен.
+знакопостоянного $a$, не являющегося чётным, не установлен. В строке с сектором оценка
+$\lvert a(x)a(-x)\rvert\le\kappa<1$ не используется.
 
 ## Файлы
 
 | Файл или папка | Содержание |
 | --- | --- |
 | [question.md](question.md) | объект, условия, вопрос, первая цель формализации, три контрольных случая |
-| [context.md](context.md) | записи C1–C16: условия, утверждение, доказательство, теоремы Lean, границы |
+| [context.md](context.md) | записи C1–C18: условия, утверждение, доказательство, теоремы Lean, границы |
 | [review.tex](review.tex) | миниобзор: четыре раздела и библиография |
 | [exposition.tex](exposition.tex) | связное изложение результатов с основными шагами доказательств |
 | [blueprint.md](blueprint.md) | узлы и зависимости, модули Lean, задачи Aristotle |
 | [ideas.md](ideas.md) | журнал идей по открытым узлам: формулировка, набросок, статус, следующий шаг |
-| [.claude/commands/day.md](.claude/commands/day.md) | ежедневный цикл, команда `/day` |
-| [.claude/commands/exposition.md](.claude/commands/exposition.md) | обновление `exposition.tex`, команда `/exposition` |
-| [.claude/style/shkalikov.md](.claude/style/shkalikov.md) | выжимка стиля А. А. Шкаликова для `exposition.tex` |
-| [sources/](sources/README.md) | реестр источников и карточки проверенных теорем |
+| [.claude/commands/](.claude/commands/) | команды: `/day` — ежедневный цикл, `/sources` — поиск и загрузка источников, `/transcribe` — PDF источника в LaTeX |
+| [.claude/skills/](.claude/skills/) | оформление текста: `exposition` (команда `/exposition`), `shkalikov-style`, `paper-canvas`, `paper-de-ai` |
+| [.claude/agents/](.claude/agents/) | агенты: идеи, критика, опыты, рецензия, формализация, соответствие формализации, поиск по Mathlib и литературе, транскрипция, сверка карточек |
+| [sources/](sources/README.md) | реестр источников, каталог, карточки проверенных теорем |
+| `.mcp.json` | MCP-серверы проекта: `lean-lsp` (цели и диагностика Lean) и `lit` (источники) |
 | [AGENTS.md](AGENTS.md) | правила работы агента |
+| [DEEPSEEK.md](DEEPSEEK.md) | работа в DeepSeek Harness: `python scripts/harness.py run web`; команды, роли и навыки собираются из `.claude/` |
+| `tests/` | проверки адаптера Harness: `python -m unittest discover tests` |
 | `Involution/`, `Involution.lean` | библиотека Lean |
 | `Target.lean` | первая цель: редукция системы $2\times2$ |
 | `Scratch.lean`, `Search.lean` | проверка имён Mathlib и аксиом; пример `exact?` |
 | `input/`, `input-lean/` | пакеты для Aristotle |
-| `scripts/` | сборка обзора, проверки, подготовка пакетов, загрузка статей |
+| `scripts/` | `lit.py` — источники: загрузка, транскрипции, поиск по полным текстам; сборка обзора, проверки, подготовка пакетов |
 | `output/` | PDF обзора, статьи, архивы ответов Aristotle; в Git не входит |
 
 ## Сборка Lean

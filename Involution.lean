@@ -93,3 +93,9 @@ import Involution.MMWoodbury
 import Involution.MarkusMatsaev
 import Involution.SobolevClosure
 import Involution.OddCoefficient
+import Involution.EigenvalueSector
+import Involution.RieszEigenCount
+import Involution.HalfSlopeProfile
+import Involution.HalfSlope
+import Involution.ResolventAux
+import Involution.ResolventBound

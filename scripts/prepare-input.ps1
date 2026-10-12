@@ -9,15 +9,24 @@ try {
     foreach ($file in @('README.md', 'catalog.md', 'results.md', 'papers.json')) {
         Copy-Item -LiteralPath (Join-Path 'sources' $file) -Destination (Join-Path 'input/sources' $file)
     }
-    # Preserve the relative PDF links in the source snapshot.
+    # Preserve the relative links to full texts in the source snapshot.
     $papers = Get-Content -LiteralPath 'sources/papers.json' -Raw -Encoding UTF8 | ConvertFrom-Json
     New-Item -ItemType Directory -Force -Path 'input/output/literature' | Out-Null
     foreach ($paper in $papers) {
-        $pdf = Join-Path 'output/literature' $paper.filename
-        if (-not (Test-Path -LiteralPath $pdf)) { throw "Missing full text: $pdf" }
-        Copy-Item -LiteralPath $pdf -Destination (Join-Path 'input/output/literature' $paper.filename)
-        $textName = [System.IO.Path]::ChangeExtension($paper.filename, '.txt')
-        Copy-Item -LiteralPath (Join-Path 'output/literature' $textName) -Destination (Join-Path 'input/output/literature' $textName)
+        $names = @()
+        if ($paper.tex) { $names += $paper.tex }
+        if ($paper.filename) { $names += $paper.filename }
+        # A registry entry added by DOI alone has no full text yet; it is skipped.
+        foreach ($name in $names) {
+            $file = Join-Path 'output/literature' $name
+            if (-not (Test-Path -LiteralPath $file)) { throw "Missing full text: $file. Run: python scripts/lit.py fetch" }
+            Copy-Item -LiteralPath $file -Destination (Join-Path 'input/output/literature' $name)
+        }
+        if ($paper.filename) {
+            # A scanned PDF has no text layer and hence no .txt next to it.
+            $text = Join-Path 'output/literature' ([System.IO.Path]::ChangeExtension($paper.filename, '.txt'))
+            if (Test-Path -LiteralPath $text) { Copy-Item -LiteralPath $text -Destination (Join-Path 'input/output/literature' (Split-Path -Leaf $text)) }
+        }
     }
     Copy-Item -LiteralPath 'lean-toolchain' -Destination 'input-lean/lean-toolchain'
     # Retain exact dependency revisions; only the standalone package name changes.

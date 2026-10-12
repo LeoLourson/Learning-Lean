@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "lean-lsp": {
+      "command": "uvx",
+      "args": ["lean-lsp-mcp==0.31.0"],
+      "env": {
+        "LEAN_MCP_DISABLED_TOOLS": "lean_local_search"
+      }
+    },
+    "lit": {
+      "command": "python",
+      "args": ["scripts/lit_mcp.py"]
+    }
+  }
+}
