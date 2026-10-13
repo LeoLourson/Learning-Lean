@@ -1,8 +1,9 @@
 # Карта формализации
 
-Записи C5–C16, C18 и утверждения 1–2 записи C17 (`context.md`) доказаны в Lean на
-слабой области Дирихле; она равна $H^2\cap H_0^1$ (S-DOMAIN). Открыты два узла: S-SPLIT
-для блоков C16 и S-GENERAL. Версии: Lean `v4.35.0-rc4`, Mathlib
+Записи C5–C16, C18, утверждения 1–2 записи C17 и утверждение 1 записи C19
+(`context.md`) доказаны в Lean на слабой области Дирихле; она равна $H^2\cap H_0^1$
+(S-DOMAIN). Лемма о выборе фазы (C19, утверждение 3) доказана в Lean. Открыты три узла: S-SPLIT
+для блоков C16, S-GLUE и S-GENERAL. Версии: Lean `v4.35.0-rc4`, Mathlib
 `1f414401f69059aa7eead47b53ee40bd38455eeb`. Аксиомы итоговых теорем проверяются в
 `Scratch.lean`: `propext`, `Classical.choice`, `Quot.sound`.
 
@@ -54,7 +55,10 @@
 | S-SECTOR | C17: при $\lvert a(x)+a(-x)\rvert\le2\alpha$, $\alpha<1$, $\lvert a(x)-a(-x)\rvert\le2\beta$ собственные значения лежат в секторе $(1-\alpha)\lvert\operatorname{Im}\lambda\rvert\le\beta\operatorname{Re}\lambda$ | S-ALL, энергетическое тождество | `eigenvalue_sector`, `oddCoefficient_eigenvalue_sector`, `ramp_eigenvalue_sector` |
 | S-RESOLVENT | C17, утверждение 2: $T_a$ обратим при $\lvert a(x)+a(-x)\rvert\le2\alpha$, $\alpha<1$; $(L_a+s)f=h$ однозначно разрешимо при $s\ge0$, $\lVert f\rVert\le\lVert G\rVert\lVert h\rVert/(1-\alpha)$ и $\lVert f\rVert\le\lVert T_a\rVert^2\lVert h\rVert/((1-\alpha)^2s)$ | S-SECTOR, S-GREEN | `principalOperator_boundedInverse`, `resolvent_estimate_corrected`, `resolvent_ray_estimate`; полнота (S3, теорема 4.7) не формализована |
 | S-HALF | C18: при $a=x/2$ нет базиса Рисса из собственных функций | S-ODD, S-IRREG, S-COUNT | `halfSlope_quasimodes`, `rieszEigenbasis_count`, `halfSlope_no_riesz_eigenbasis` |
-| S-GENERAL | весь класс $W^1_\infty$: нули и смена знака | S-ODD для нечётного $a$, S-SECTOR, S-HALF | открыт; базис со скобками и базис с присоединёнными функциями для нечётного $a$ не исследованы |
+| S-RAY | C19, утверждение 1: при $r,w\in W^2_\infty$, $rw=1$, $b(x)r(x)=a(x)r(-x)$, $\lvert b(x)+b(-x)\rvert\le2\alpha<2$ оператор $T_a$ обратим, $(L_a+s)f=h$ однозначно разрешимо и $\lVert f\rVert\le C\lVert h\rVert/s$ при $s\ge s_0$ | S-SYM, S-RESOLVENT | `gauge_principalOperator_boundedInverse`, `gauge_resolvent_ray_estimate`; полнота (S3, теорема 4.7) не формализована |
+| S-PHASE | C19, утверждение 3: для непрерывной на $[-1,1]$ вещественной $a$ с $\lvert a(x)a(-x)\rvert<1$ есть гладкая нечётная $\psi$, равная нулю около нуля, с $\lvert a(x)e^{-\psi(x)}+a(-x)e^{\psi(x)}\rvert\le2\alpha<2$ на $[-1,1]$ | `exists_contMDiffMap_forall_mem_convex_of_local_const` | `exists_phase_value`, `convex_phase_values`, `exists_odd_phase` |
+| S-GLUE | C19, следствие: по $\psi$ из S-PHASE построить $r=e^{\psi/2}$, $w=e^{-\psi/2}\in W^2_\infty$, $b=ae^{-\psi}$ и получить оценку на луче для непрерывной $a$ | S-RAY, S-PHASE | открыт; формулировки в Lean нет |
+| S-GENERAL | весь класс $W^1_\infty$: нули и смена знака | S-ODD для нечётного $a$, S-SECTOR, S-HALF, S-RAY | открыт; оценка на луче — S-RAY; базис со скобками и базис с присоединёнными функциями для нечётного $a$ не исследованы |
 
 ```mermaid
 graph LR
@@ -87,6 +91,10 @@ graph LR
   SALL --> SODD[S-ODD]
   SALL --> SSEC[S-SECTOR]
   SSEC --> SRES[S-RESOLVENT]
+  SSYM --> SRAY[S-RAY]
+  SRES --> SRAY
+  SRAY --> SGLUE[S-GLUE]
+  SPH[S-PHASE] --> SGLUE
   SODD --> SHALF[S-HALF]
   SIRR --> SHALF
   SALL --> SCNT[S-COUNTER]
@@ -108,7 +116,7 @@ graph LR
 | Оператор Дирихле | `DirichletDomain`, `ScalarDomain`, `DirichletEnergy`, `DirichletGreen`, `SpectralGreen`, `ParityGreen` | — |
 | Чётный коэффициент | `WeightedGreen`, `PositiveWeight`, `CompactEigenbasis`, `MultiplicationEquiv`, `WeightedEigenbasis`, `EvenCoefficient`, `ParityBasis`, `ParityMultiplier`, `EvenEigenbasis`, `WeightedSymmetry`, `ParityDomain`, `EvenNoJordan`, `ACSpectral` | — |
 | Базисы | `RieszBasis`, `BracketBounds`, `FlattenedBounds`, `FiniteSynthesis`, `ProjectionBrackets` | — |
-| Весь класс и примеры | `CompactInverse`, `OneSidedExample`, `RampSpectrum`, `RampNoBasis`, `OddCoefficient`, `EigenvalueSector`, `ResolventAux`, `ResolventBound` | `ResolventAux`; в `ResolventBound` — `principalOperator_boundedInverse` |
+| Весь класс и примеры | `CompactInverse`, `OneSidedExample`, `RampSpectrum`, `RampNoBasis`, `OddCoefficient`, `EigenvalueSector`, `ResolventAux`, `ResolventBound`, `GaugeResolvent`, `PhaseSelection` | `ResolventAux`, `PhaseSelection`; в `ResolventBound` — `principalOperator_boundedInverse` |
 | Пример $a=x/2$ | `HalfSlopeProfile`, `RieszEigenCount`, `HalfSlope` | все |
 | Калибровка | `SobolevMultiplier`, `CoefficientInverse`, `CoefficientSqrt`, `GaugeSimilarity`, `GaugeOperators` | — |
 | Метод подобных операторов | `SchurMultiplier`, `BlockMultiplier`, `SparseCuts`, `BlockPerturbation`, `BlockInvariant`, `SubordinatePerturbation`, `EigenvalueCounting` | `SchurMultiplier`, `SparseCuts` |
@@ -122,7 +130,7 @@ graph LR
 ## Задачи Aristotle
 
 Задачи 1–7 отправлены 10.10.2026; ответ 7 принят 11.10.2026; задача 8 отправлена
-11.10.2026, задача 9 — 12.10.2026; ответы 8 и 9 приняты 12.10.2026. Для каждого принятого ответа сверены формулировки с отправленной заготовкой, проверено отсутствие `sorry` и `axiom`,
+11.10.2026, задача 9 — 12.10.2026; ответы 8 и 9 приняты 12.10.2026; задача 10 отправлена и принята 13.10.2026. Для каждого принятого ответа сверены формулировки с отправленной заготовкой, проверено отсутствие `sorry` и `axiom`,
 модуль собран локально с закреплёнными версиями. Архивы и квитанции лежат в `output/`.
 
 | № | Проект | Задача | Архив | Принято |
@@ -136,6 +144,7 @@ graph LR
 | 7 | `18ff2d66-76b1-4b36-9808-c9e2df6825f5` | узел S-DOMAIN: `memIntervalH01_iff_trace`, `memDirichletH2_iff_h2_and_h01` | `aristotle-domain-result.tar.gz` | `SobolevClosure.lean` |
 | 8 | `55948b6e-fdd9-40a9-a773-134c314d2281` | узел S-GENERAL: `halfSlope_no_riesz_eigenbasis` — при $a=x/2$ нет базиса Рисса из собственных функций | `aristotle-halfslope-result.tar.gz` | `HalfSlopeProfile.lean`, `RieszEigenCount.lean`, `HalfSlope.lean` |
 | 9 | `4fa6750a-179c-4643-a25c-4fd9f13cfe54` | C17, утверждение 2: `reflectedMultiplier_re_inner_bound`, `principalOperator_boundedInverse`, `resolvent_estimate` | `aristotle-resolvent-result.tar.gz` | частично: `ResolventAux.lean`, `principalOperator_boundedInverse`; две формулировки заготовки опровергнуты |
+| 10 | `b3851f6d-14d1-4885-bfd0-5a52e856384f` | узел S-PHASE: `exists_odd_phase` — выбор гладкой нечётной фазы $\psi$ (C19, утверждение 3) | `aristotle-phase-result.tar.gz` | `PhaseSelection.lean` |
 
 Задача 7 отправлена пакетом `output/aristotle-open-nodes`: весь проект и заготовка
 `Involution/SobolevClosure.lean` с определениями `IsTestPair`, `MemIntervalH01` и двумя
@@ -179,6 +188,18 @@ $A=i\operatorname{sign}x$), а оценка $\lVert G\rVert/(s+1-\alpha)$ в `re
 перенесены `ResolventAux.lean` без правок и теорема `principalOperator_boundedInverse`;
 `ResolventCounter.lean` и версия `ResolventBound.lean` с двумя `sorry` остались в архиве.
 Теорема `resolvent_ray_estimate` в библиотечном `ResolventBound.lean` доказана локально.
+
+Задача 10 отправлена 13.10.2026 командой `/day` пакетом `output/aristotle-phase`:
+отдельный проект, зависящий только от Mathlib, и заготовка
+`Involution/PhaseSelection.lean` с тремя `sorry` (`exists_phase_value`,
+`convex_phase_values`, `exists_odd_phase`). Две вспомогательные формулировки сервису
+разрешено менять, итоговую — нет. Заготовка собрана локально с закреплёнными версиями
+(три предупреждения `declaration uses sorry`). Ответ пришёл со статусом `COMPLETE`:
+заголовки трёх теорем совпадают с заготовкой, `sorry` и `axiom` нет, добавлены три
+вспомогательные леммы (`phase_lt_two_iff`, `exists_phase_u`, `quad_neg_ordConnected`).
+Вместо покрытия и разбиения единицы из наброска использована теорема Mathlib
+`exists_contMDiffMap_forall_mem_convex_of_local_const`. При переносе `public import
+Mathlib` заменён четырьмя импортами модулей Mathlib; остальной текст не менялся.
 
 `input-lean/Target.lean` — упражнение для сервиса: узел A4 с одним `sorry`. Корневой
 `Target.lean` доказан локально.

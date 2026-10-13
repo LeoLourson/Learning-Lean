@@ -22,6 +22,7 @@ $$
 | $a\in L_\infty$ | компактный обратный, альтернатива Фредгольма; базисность не следует | `productBound_compact_inverse`, `productBound_fredholm` |
 | $a\in L_\infty$, $a(-x)=-a(x)$ | $L_a$ унитарно эквивалентен $(1+ia)(-D^2)$; базисность не доказана | `oddCoefficient_unitary_multiplication` |
 | $a\in L_\infty$, $\lvert a(x)+a(-x)\rvert\le2\alpha$, $\alpha<1$, $\lvert a(x)-a(-x)\rvert\le2\beta$ | собственные значения в секторе $(1-\alpha)\lvert\operatorname{Im}\lambda\rvert\le\beta\operatorname{Re}\lambda$; $\lVert(L_a+s)^{-1}\rVert\le C/s$ при $s>0$; полнота корневых функций по теореме из S3, в Lean не формализована | `eigenvalue_sector`, `resolvent_ray_estimate` |
+| $a$ непрерывна на $[-1,1]$, $\lvert a(x)a(-x)\rvert<1$; в частности весь класс постановки | $\lVert(L_a+s)^{-1}\rVert\le C/s$ при $s\ge s_0$ и полнота корневых функций (C19). В Lean доказана оценка в калибровочных данных $r,w,b$; выбор фазы $\psi$ и теорема о полноте из S3 не формализованы | `gauge_resolvent_ray_estimate` |
 | $a=4$ на $(0,1)$, $a=0$ на $(-1,0)$ | собственных значений нет | `oneSided_no_eigenfunction`, `oneSided_no_bracket_basis` |
 | $a(x)=\max(x,0)$ | нет базиса Рисса из собственных функций | `ramp_no_riesz_eigenbasis` |
 | $a(x)=x/2$ | нет базиса Рисса из собственных функций | `halfSlope_no_riesz_eigenbasis` |
@@ -39,7 +40,7 @@ $\lvert a(x)a(-x)\rvert\le\kappa<1$ не используется.
 | Файл или папка | Содержание |
 | --- | --- |
 | [question.md](question.md) | объект, условия, вопрос, первая цель формализации, три контрольных случая |
-| [context.md](context.md) | записи C1–C18: условия, утверждение, доказательство, теоремы Lean, границы |
+| [context.md](context.md) | записи C1–C19: условия, утверждение, доказательство, теоремы Lean, границы |
 | [review.tex](review.tex) | миниобзор: четыре раздела и библиография |
 | [exposition.tex](exposition.tex) | связное изложение результатов с основными шагами доказательств |
 | [blueprint.md](blueprint.md) | узлы и зависимости, модули Lean, задачи Aristotle |

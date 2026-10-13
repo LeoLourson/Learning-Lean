@@ -99,3 +99,5 @@ import Involution.HalfSlopeProfile
 import Involution.HalfSlope
 import Involution.ResolventAux
 import Involution.ResolventBound
+import Involution.GaugeResolvent
+import Involution.PhaseSelection

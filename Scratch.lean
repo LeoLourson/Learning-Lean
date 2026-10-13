@@ -303,3 +303,6 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 #print axioms Involution.principalOperator_boundedInverse
 #print axioms Involution.resolvent_estimate_corrected
 #print axioms Involution.resolvent_ray_estimate
+#print axioms Involution.gauge_principalOperator_boundedInverse
+#print axioms Involution.gauge_resolvent_ray_estimate
+#print axioms Involution.exists_odd_phase
