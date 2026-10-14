@@ -1,16 +1,17 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python scripts/proj.py *)",
-      "Bash(python scripts/lit.py *)",
+      "Bash(python tools\\sources\\lit.py *)",
+      "Bash(python tools\\host\\harness.py *)",
+      "Bash(python tools\\state\\*)",
+      "Bash(python tools\\check\\*)",
       "Bash(python -m unittest *)",
       "Bash(lake build)",
       "Bash(lake build *)",
       "Bash(lake env lean *)",
       "mcp__lit",
-      "mcp__proj",
       "mcp__lean-lsp"
     ]
   },
-  "enabledMcpjsonServers": ["lean-lsp", "lit", "proj"]
+  "enabledMcpjsonServers": ["lean-lsp", "lit"]
 }

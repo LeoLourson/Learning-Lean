@@ -1,24 +1,47 @@
+# Сборка Lean и Mathlib
 .lake/
-output/
-__pycache__/
-.dsh/skills/
 
-# Снимок заметок для Aristotle: создаётся скриптом scripts/prepare-input.ps1
-/input/*
-!/input/prompt.md
-/input-lean/lake-manifest.json
-/input-lean/lean-toolchain
+# Цех: сборки, архивы ответов, транскрипции, снимки, отчёты реорганизации
+output/
+
+# Производные для DeepSeek Harness (собирает tools/host/harness.py prepare)
+.dsh/skills/
+.dsh/*.json
+.dsh/*.jsonc
+.dsh/*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# Собранные PDF и журналы LaTeX
+paper/*.pdf
+paper/*.log
+paper/generated/*.pdf
 
 # Промежуточные файлы LaTeX
 *.aux
 *.fdb_latexmk
 *.fls
 *.out
+*.toc
 *.synctex.gz
-/review.log
-/review.pdf
+
+# Служебное редактора и системы
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Thumbs.db
+Desktop.ini
 
 # Ключи доступа
 .env
 .env.*
 !.env.example
+
+# Пакет задачи A4: исходники в Git входят,
+# манифест и версия Lean пакета — нет
+/tasks/A4/package/lake-manifest.json
+/tasks/A4/package/lean-toolchain

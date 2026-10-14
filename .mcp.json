@@ -9,7 +9,7 @@
     },
     "lit": {
       "command": "python",
-      "args": ["scripts/lit_mcp.py"]
+      "args": ["tools/sources/lit_mcp.py"]
     }
   }
 }

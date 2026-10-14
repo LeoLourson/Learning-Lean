@@ -5,17 +5,20 @@ on:
   pull_request:
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read # Read access to repository contents
-  pages: write # Write access to GitHub Pages
-  id-token: write # Write access to ID tokens
 
 jobs:
-  build:
+  checks:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v7
+      # lean-action ставит elan по lean-toolchain и прогревает кэш Mathlib.
+      # Сборку, пробы, реестр аксиом, раскладку, свежесть производных файлов
+      # и тесты ведёт одна команда tools/check/check.ps1: она же вызывается
+      # локально, поэтому CI и рабочая проверка не расходятся.
       - uses: leanprover/lean-action@v1
-      - uses: leanprover-community/docgen-action@v1
+      - name: Project checks
+        shell: pwsh
+        run: ./tools/check/check.ps1

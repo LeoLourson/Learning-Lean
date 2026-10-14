@@ -1,6 +1,5 @@
-import Involution.Reduction
-
-/-! First completed target. The isolated exercise for Aristotle is in `input-lean/`. -/
+import Involution.Folding.Reduction
+/-! First completed target. The isolated exercise for Aristotle is in `tasks/A4/package/`. -/
 
 namespace Involution
 
