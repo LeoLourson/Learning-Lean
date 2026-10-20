@@ -25,7 +25,7 @@
 
 | Класс | Путь | Кто пишет | Что это |
 | --- | --- | --- | --- |
-| `rules` | `AGENTS.md`, `README.md`, `CLAUDE.md`, `.gitignore` | человек | устав проекта, вход, точка входа Claude Code |
+| `rules` | `AGENTS.md`, `README.md`, `CLAUDE.md`, `WORKFLOW.md`, `.gitignore` | человек | устав проекта, вход, точка входа Claude Code, схема работы |
 | `layout` | `LAYOUT.md`, `FACETS.md` | человек | эта таблица и шапки единиц |
 | `instruction` | `.claude/**` | человек | контракт Claude Code: команды, роли, навыки, настройки |
 | `mcp` | `.mcp.json` | человек | состав MCP-серверов |

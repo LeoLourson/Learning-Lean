@@ -70,9 +70,12 @@ public import Involution.Model.WeightedEigenbasis
 public import Involution.Model.WeightedGreen
 public import Involution.Model.WeightedSymmetry
 
--- Слой Estimates: 35 модулей.
+-- Слой Estimates: 40 модулей.
 public import Involution.Estimates.BracketCorollaries
 public import Involution.Estimates.EigenvalueSector
+public import Involution.Estimates.FormEnergy
+public import Involution.Estimates.FormMarkusMatsaev
+public import Involution.Estimates.FormRatioBrackets
 public import Involution.Estimates.GaugeResolvent
 public import Involution.Estimates.GeneralBrackets
 public import Involution.Estimates.HalfSlope
@@ -98,9 +101,11 @@ public import Involution.Estimates.MMWoodbury
 public import Involution.Estimates.NearlyEvenBrackets
 public import Involution.Estimates.OddCoefficient
 public import Involution.Estimates.OneSidedExample
+public import Involution.Estimates.PositiveRatioBrackets
 public import Involution.Estimates.ProjectionBrackets
 public import Involution.Estimates.RampNoBasis
 public import Involution.Estimates.RampSpectrum
+public import Involution.Estimates.RayResolvent
 public import Involution.Estimates.ResolventAux
 public import Involution.Estimates.ResolventBound
 public import Involution.Estimates.RieszEigenCount

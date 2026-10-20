@@ -6,7 +6,7 @@
 
 ## Узлы и зависимости
 
-Узлов: 49, связей `depends_on`: 36. Граф ацикличен.
+Узлов: 67, связей `depends_on`: 46. Граф ацикличен.
 
 | id | title | status | depends_on | класс |
 | --- | --- | --- | --- | --- |
@@ -29,6 +29,9 @@
 | C17 | Сектор собственных значений и полнота | proved-lean | C8, S3 | record |
 | C18 | Пример $a(x)=x/2$: нет базиса Рисса из собственных функций | proved-aristotle | C4, C11, C17, I9 | record |
 | C19 | Калибровка нечётной фазой: полнота для всего класса постановки | proved-lean | C10, C17, S3 | record |
+| C20 | Положительное гладкое отношение $a(x)/a(-x)$: базис Рисса со скобками для знакопеременного коэффициента | proved-lean | C5, C10, C16 | record |
+| C21 | Оценка резольвенты вне сектора и суммируемость по Абелю–Лидскому | proved-lean | C8, C17, S3 | record |
+| C22 | Положительное отношение $a(x)/a(-x)$ класса $W^1_\infty$: базис Рисса со скобками через возмущение формы | proved-lean | C5, C10, C20, S3 | record |
 | I1 | $H_0^1$ как замыкание пробных функций | promoted | — | idea |
 | I2 | Равномерные константы в блоках C16 | open | — | idea |
 | I3 | Собственные значения главной матрицы при нулях $a$ | open | — | idea |
@@ -50,6 +53,21 @@
 | I19 | При $a=x/2$ задача изоспектральна задаче Дирихле с ограниченным аналитическим потенциалом на отрезке $[0,\ell]$: простота и асимптотика собственных значений | promoted | — | idea |
 | I20 | Норма спектрального проектора через индефинитную форму $\langle RHy,z\rangle$: критерий снятия скобок | open | — | idea |
 | I21 | Семейство $a_t=1/2+tx$: точки ветвления плотны, и при типичном $t$ скобки снять нельзя | open | — | idea |
+| I22 | Знакопостоянный коэффициент — доминантный оператор с явным спектром и линеаризация в энергетическом пространстве; скобки ограниченного размера по теореме 7.1 обзора S3 при порядке 1 | open | — | idea |
+| I23 | Отрицательное произведение — доминантный оператор с комплексной фазой Лиувилля не подобен нормальному; взамен базис для суммирования Абеля–Лидского порядка больше 1/2 | open | — | idea |
+| I24 | Характеристический определитель модели I22 равен cos(μℓ₊)sin(μℓ₋); плотность и порядок α=1, диофантова дихотомия для зазоров, закрытие шага 4 I22 и регулярность в смысле S8/S35 | rejected | — | idea |
+| I25 | Явная граница размера блоков из точной арифметики модели по частотной переменной и перенос на класс C16 через запас возмущения | rejected | — | idea |
+| I26 | Смена знака произведения $a(x)a(-x)$ исключает базис Рисса из собственных функций — аналог невещественной фазы S35 для гладкого $a$ без нечётности | open | — | idea |
+| I27 | Знакопеременный коэффициент с положительным гладким отношением $a(x)/a(-x)$ — калибровка к чётному и базис со скобками C16 без условия $\lvert a\rvert\ge m$ | promoted | — | idea |
+| I28 | Размер скобок C16 через шаг разрезов и счёт нулей оконного определителя | open | — | idea |
+| I29 | Двучленное ВКБ-разложение для сложенной системы 2×2 — лемма шага 4 идеи I26 с остатком O(1) и гладкостью C^3 | open | — | idea |
+| I30 | Возмущение квадратичной формой — базис Рисса со скобками C20 при $q\in W^1_\infty$ вместо $W^2_\infty$; знакопостоянный $a$ класса постановки | promoted | — | idea |
+| I31 | Целесообразность подхода через формы — что он даёт сверх C16, C19, C20 и где ломается схема черновика D | open | — | idea |
+| I32 | Регулярность в смысле Шкаликова для условий Штурма — главная часть характеристического определителя синус-типа ширины ℓ₊+ℓ₋; классификация трёх случаев разделённых условий | open | — | idea |
+| I33 | Смешанные условия (Дирихле на одном конце, β≠0 на другом) строго регулярны — нули Δ₀ перемежаются с сеткой πk/L и отделены; кандидат в базис Рисса без чётности a | open | — | idea |
+| I34 | Общие двухточечные условия — регулярность через коэффициенты K₁…K₄ при μ²S₊C₋, μS₊S₋, μC₊C₋, C₊S₋, выраженные через миноры J_{ij} | open | — | idea |
+| I35 | Схема C22 для условий Штурма и общих условий робеновского типа — граничный член формы не зависит от веса $r$ | open | — | idea |
+| I36 | Схема C22 для условий, связывающих значения $y(1)=c\,y(-1)$ (периодические, антипериодические) — проходит при $c=0$ или $a(1)=a(-1)$, иначе формы на разных пространствах | open | — | idea |
 | S1 | Bondarenko, матричная редукция (прочитанная часть) | unverified-source | — | card |
 | S2 | Постоянная модель с отражением | unverified-source | — | card |
 | S3 | Обзор теории подчинённых возмущений | verified | — | card |
@@ -84,6 +102,16 @@ graph LR
   C10[C10] --> C19[C19]
   C17[C17] --> C19[C19]
   S3[S3] --> C19[C19]
+  C5[C5] --> C20[C20]
+  C10[C10] --> C20[C20]
+  C16[C16] --> C20[C20]
+  C8[C8] --> C21[C21]
+  C17[C17] --> C21[C21]
+  S3[S3] --> C21[C21]
+  C5[C5] --> C22[C22]
+  C10[C10] --> C22[C22]
+  C20[C20] --> C22[C22]
+  S3[S3] --> C22[C22]
   C1[C1] --> C4[C4]
   C2[C2] --> C4[C4]
   I5[I5] --> C4[C4]
@@ -107,7 +135,7 @@ graph LR
 | Setup | `ACDomain.lean`, `ClassicalModes.lean`, `ComplexAC.lean`, `DirichletDomain.lean`, `DirichletEnergy.lean`, `IntervalOperator.lean`, `IntervalRegularity.lean`, `IntervalSobolev.lean`, `IntervalTrace.lean`, `L2Parity.lean`, `L2Reflection.lean`, `PhaseSelection.lean`, `Reflection.lean`, `SmoothPrimitive.lean`, `WeakConstant.lean`, `WeakDerivative.lean`, `WeakPrimitive.lean` |
 | Folding | `ComplexReduction.lean`, `FoldedOperator.lean`, `FoldedSobolev.lean`, `FoldingIntegral.lean`, `IntervalGluing.lean`, `IntervalReflection.lean`, `L2Folding.lean`, `Reduction.lean`, `Symmetrization.lean`, `VariableOperator.lean` |
 | Model | `ACSpectral.lean`, `BlockInvariant.lean`, `BlockMultiplier.lean`, `BlockPerturbation.lean`, `BracketBounds.lean`, `CoefficientInverse.lean`, `CoefficientSqrt.lean`, `CompactEigenbasis.lean`, `CompactInverse.lean`, `DirichletGreen.lean`, `EigenvalueCounting.lean`, `EvenCoefficient.lean`, `EvenEigenbasis.lean`, `EvenNoJordan.lean`, `FiniteSynthesis.lean`, `FlattenedBounds.lean`, `GaugeOperators.lean`, `GaugeSimilarity.lean`, `ModelBasis.lean`, `ModelEigenbasis.lean`, `MultiplicationEquiv.lean`, `ParityBasis.lean`, `ParityDomain.lean`, `ParityGreen.lean`, `ParityMultiplier.lean`, `PositiveWeight.lean`, `RieszBasis.lean`, `ScalarDomain.lean`, `SchurMultiplier.lean`, `SobolevModes.lean`, `SobolevMultiplier.lean`, `SparseCuts.lean`, `SpectralGreen.lean`, `SubordinatePerturbation.lean`, `WeightedEigenbasis.lean`, `WeightedGreen.lean`, `WeightedSymmetry.lean` |
-| Estimates | `BracketCorollaries.lean`, `EigenvalueSector.lean`, `GaugeResolvent.lean`, `GeneralBrackets.lean`, `HalfSlope.lean`, `HalfSlopeProfile.lean`, `MMCompact.lean`, `MMContour.lean`, `MMCore.lean`, `MMCuts.lean`, `MMEstimates.lean`, `MMGoodCut.lean`, `MMMinModulus.lean`, `MMOperators.lean`, `MMPointwise.lean`, `MMRiesz.lean`, `MMRieszBasis.lean`, `MMScalar.lean`, `MMSideInt.lean`, `MMTotal.lean`, `MMWindow.lean`, `MMWindowCut.lean`, `MMWoodbury.lean`, `MarkusMatsaev.lean`, `NearlyEvenBrackets.lean`, `OddCoefficient.lean`, `OneSidedExample.lean`, `ProjectionBrackets.lean`, `RampNoBasis.lean`, `RampSpectrum.lean`, `ResolventAux.lean`, `ResolventBound.lean`, `RieszEigenCount.lean`, `SignDefiniteBrackets.lean`, `SobolevClosure.lean` |
+| Estimates | `BracketCorollaries.lean`, `EigenvalueSector.lean`, `FormEnergy.lean`, `FormMarkusMatsaev.lean`, `FormRatioBrackets.lean`, `GaugeResolvent.lean`, `GeneralBrackets.lean`, `HalfSlope.lean`, `HalfSlopeProfile.lean`, `MMCompact.lean`, `MMContour.lean`, `MMCore.lean`, `MMCuts.lean`, `MMEstimates.lean`, `MMGoodCut.lean`, `MMMinModulus.lean`, `MMOperators.lean`, `MMPointwise.lean`, `MMRiesz.lean`, `MMRieszBasis.lean`, `MMScalar.lean`, `MMSideInt.lean`, `MMTotal.lean`, `MMWindow.lean`, `MMWindowCut.lean`, `MMWoodbury.lean`, `MarkusMatsaev.lean`, `NearlyEvenBrackets.lean`, `OddCoefficient.lean`, `OneSidedExample.lean`, `PositiveRatioBrackets.lean`, `ProjectionBrackets.lean`, `RampNoBasis.lean`, `RampSpectrum.lean`, `RayResolvent.lean`, `ResolventAux.lean`, `ResolventBound.lean`, `RieszEigenCount.lean`, `SignDefiniteBrackets.lean`, `SobolevClosure.lean` |
 | Theorems | `BasisConditions.lean`, `MainTheorems.lean` |
 | Examples | `Examples.lean`, `MatrixInverse.lean` |
 

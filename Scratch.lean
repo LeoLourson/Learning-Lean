@@ -306,3 +306,12 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 #print axioms Involution.gauge_principalOperator_boundedInverse
 #print axioms Involution.gauge_resolvent_ray_estimate
 #print axioms Involution.exists_odd_phase
+
+-- Положительное отношение a(x)/a(-x) (C20).
+#print axioms Involution.bracketBasis_of_positiveRatio
+#print axioms Involution.bracketRootVectors_of_positiveRatio
+#print axioms Involution.resolvent_sector_ray_estimate
+
+-- Положительное отношение класса W¹∞ через возмущение формы (C22).
+#print axioms Involution.bracketBasis_of_positiveRatio_W1
+#print axioms Involution.bracketRootVectors_of_positiveRatio_W1
